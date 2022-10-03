@@ -1,110 +1,110 @@
-/*******************************************************************************************
-*
-*   raylib [core] example - Basic 3d example
-*
-*   Welcome to raylib!
-*
-*   To compile example, just press F5.
-*   Note that compiled executable is placed in the same folder as .c file
-*
-*   You can find all basic examples on C:\raylib\raylib\examples folder or
-*   raylib official webpage: www.raylib.com
-*
-*   Enjoy using raylib. :)
-*
-*   This example has been created using raylib 1.0 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2013-2022 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
+#include <math.h>
 
-#if defined(PLATFORM_WEB)
-    #include <emscripten/emscripten.h>
-#endif
+#define HEADING_LEFT 1
+#define HEADING_RIGHT 2
 
-//----------------------------------------------------------------------------------
-// Local Variables Definition (local to this module)
-//----------------------------------------------------------------------------------
-Camera camera = { 0 };
-Vector3 cubePosition = { 0 };
+typedef struct{
+    int posX;
+    int posY;
+    int frameCounter;
+    int life;
+    Rectangle playerCollision;
+    Rectangle playerLife;
+    int speed;
+} Player;
 
-//----------------------------------------------------------------------------------
-// Local Functions Declaration
-//----------------------------------------------------------------------------------
-static void UpdateDrawFrame(void);          // Update and draw one frame
+typedef struct{
+    int posX;
+    int posY;
+    Rectangle carCollision;
+    Rectangle carLife;
+    float angle;
+    int speed;
+    int life;
+    float timeChangingAngle;
+} Car;
 
-//----------------------------------------------------------------------------------
-// Main entry point
-//----------------------------------------------------------------------------------
-int main() 
+void changeCarAngle(Car *car, Player player){
+     if((player.posX-car->posX)==0){
+            if(player.posY>car->posY){
+                car[0].angle = 90;
+            }
+            else if(player.posY<car->posY){
+                car[0].angle = 270;
+            }
+        }
+        else{
+
+            car[0].angle = atan((player.posY-car->posY)/(player.posX-car->posX))*180/PI;
+        }
+}
+
+
+int main()
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
+   
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib");
+    Rectangle car;
+    car.x=100;
+    car.y = 100;
+    car.height=30;
+    car.width = 40;
 
-    camera.position = (Vector3){ 10.0f, 10.0f, 8.0f };
-    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
-    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
-    camera.fovy = 60.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    SetTargetFPS(60);               
+    int playerX, playerY;
+    int playerSpeed = 3;
+    playerX = 200;
+    playerY = 200;
+    float angle = 0;
     
-    SetCameraMode(camera, CAMERA_ORBITAL);
 
-    //--------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
-#else
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    while (!WindowShouldClose()){    
+        
+        // movimentação básica do personagem
+        if(IsKeyDown(KEY_LEFT)==true){
+            playerX-=playerSpeed;
+        }
+        if(IsKeyDown(KEY_RIGHT)==true){
+            playerX+=playerSpeed;
+        }
+        if(IsKeyDown(KEY_UP)==true){
+            playerY-=playerSpeed;
+        }
+        if(IsKeyDown(KEY_DOWN)==true){
+            playerY+=playerSpeed;
+        }
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        UpdateDrawFrame();
+
+        if((playerX-car.x)==0){
+            if(playerY>car.y){
+                angle = 90;
+            }
+            else if(playerY<car.y){
+                angle = 270;
+            }
+        }
+        else{
+
+            angle = atan((playerY-car.y)/(playerX-car.x))*180/PI;
+        }
+
+        BeginDrawing();
+
+            ClearBackground(RAYWHITE);
+            DrawCircle(playerX, playerY, 15, RED);
+            DrawRectanglePro(car, (Vector2){20,15}, angle, BLUE);
+
+           
+
+        EndDrawing();
+        
     }
-#endif
-
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();                  // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
-
+    
+    CloseWindow();       
     return 0;
-}
-
-// Update and draw game frame
-static void UpdateDrawFrame(void)
-{
-    // Update
-    //----------------------------------------------------------------------------------
-    UpdateCamera(&camera);
-    //----------------------------------------------------------------------------------
-
-    // Draw
-    //----------------------------------------------------------------------------------
-    BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        BeginMode3D(camera);
-
-            DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-            DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
-            DrawGrid(10, 1.0f);
-
-        EndMode3D();
-
-        DrawText("This is a raylib example", 10, 40, 20, DARKGRAY);
-
-        DrawFPS(10, 10);
-
-    EndDrawing();
-    //----------------------------------------------------------------------------------
 }
