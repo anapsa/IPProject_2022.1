@@ -12,6 +12,7 @@ typedef struct{
     int speed;
     int life;
     float timeChangingAngle;
+    int mode;// aiming at player or running
 } Car;
 
 void changeCarAngle(Car *car, Player player);
