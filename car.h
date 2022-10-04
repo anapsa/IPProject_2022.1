@@ -14,7 +14,7 @@ typedef struct{
     float timeChangingAngle;
 } Car;
 
-void changeCarAngle(Car *car, Player *player);
+void changeCarAngle(Car *car, Player player);
 
 
 
