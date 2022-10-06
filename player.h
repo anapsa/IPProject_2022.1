@@ -2,6 +2,7 @@
 #define PLAYER
 #include "raylib.h"
 
+
 typedef struct{
     int posX;
     int posY;

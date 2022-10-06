@@ -1,10 +1,10 @@
 #include "raylib.h"
 #include <math.h>
-#include "car.h"
-#include "player.h"
+#include "car.c"
+#include "player.C"
 
-#define HEADING_LEFT 1
-#define HEADING_RIGHT 2
+
+
 #define AIMING 100
 #define RUNNING 101
 #define MENU 10
@@ -20,11 +20,22 @@ int main()
    
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    SetTargetFPS(60);               
+    SetTargetFPS(60);
+    Rectangle playerCollision;
+    playerCollision.x = 300;
+    playerCollision.y = 300;
+    playerCollision.height = 40;
+    playerCollision.width = 30;               
+    Player player = (Player){300, 300, 0, 10, playerCollision, playerCollision, 3, HEADING_LEFT, false};
+    Texture2D playerText = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
+    Texture2D car = LoadTexture("SportsRacingCar_0.png");
+    Car carro = (Car){400, 400, playerCollision, playerCollision, 0, 10, 10, 10, 10 ,false};
     
     
-    int gameMode = MENU;
-
+    
+    int gameMode = GAME;
+    
+    
 
     while (!WindowShouldClose()){    
         
@@ -34,7 +45,24 @@ int main()
 
                 break;
             case GAME:
-                //códigos do jogo em si
+                
+                BeginDrawing();
+                movePlayer(&player);
+                changeCarAngle(&carro, player);
+                DrawCar(carro, car);
+                carro.posX+=cos(carro.angle)*2;
+                carro.posY+=sin(carro.angle)*2;
+                
+                ClearBackground(RAYWHITE);
+                DrawTexture(playerText, player.posX, player.posY, RAYWHITE);
+                
+                
+                
+                
+
+
+
+                EndDrawing();
 
                 break;
             case UPGRADE:
@@ -46,6 +74,7 @@ int main()
         
     }
     
-    CloseWindow();       
+    CloseWindow();
+    UnloadTexture(playerText);       
     return 0;
 }

@@ -13,9 +13,12 @@ typedef struct{
     int life;
     float timeChangingAngle;
     int mode;// aiming at player or running
+    bool isColliding; //verifica se está colidindo com a parede
 } Car;
 
 void changeCarAngle(Car *car, Player player);
+
+void DrawCar(Car car, Texture2D carTexture);
 
 
 
