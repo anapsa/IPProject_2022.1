@@ -4,8 +4,8 @@
 #include "player.h"
 
 typedef struct{
-    int posX;
-    int posY;
+    float posX;
+    float posY;
     Rectangle carCollision;
     Rectangle carLife;
     float angle;
