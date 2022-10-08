@@ -20,6 +20,8 @@ void changeCarAngle(Car *car, Player player);
 
 void DrawCar(Car car, Texture2D carTexture);
 
+void moveCar(Car *car);
+
 
 
 #endif
