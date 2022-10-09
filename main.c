@@ -34,11 +34,13 @@ int main()
     exemplo.y = 0;
     exemplo.height = 10;
     exemplo.y = 10;
-    Car car = (Car){300, 300, exemplo, exemplo, 0, 5, 0, 2, 0, false};
-    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 10, 10, false};
+    Car car = (Car){300, 300, exemplo, exemplo, 0, 5, 0, 5, 0, false};
+    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false};
     float timer = 0;
     int gameMode = GAME;
-    char angle[6];
+    
+    
+    
     while (!WindowShouldClose()){    
         
         switch(gameMode){
@@ -47,15 +49,16 @@ int main()
 
                 break;
             case GAME:
+                
                 timer+=GetFrameTime();
-                gcvt(car.angle, 3, angle);
+                
                 movePlayer(&player);
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
                 DrawCar(car, carTexture);
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
-                DrawText(angle, 500, 500, 20, BLACK);
-                if(timer<3){
+                
+                if(timer<5){
                     changeCarAngle(&car, player);
 
                 }

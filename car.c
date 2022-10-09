@@ -8,7 +8,7 @@
 
 void changeCarAngle(Car *car, Player player){
     
-    float dist = sqrt(pow(abs(player.posY+13-car[0].posY), 2)+pow(abs(player.posX+8-car[0].posX), 2));
+    float dist = sqrt(pow(fabs(player.posY+13-car[0].posY), 2)+pow(fabs(player.posX+8-car[0].posX), 2));
 
     if(player.posX>car->posX){
 
@@ -17,6 +17,10 @@ void changeCarAngle(Car *car, Player player){
     else{
         car[0].angle = 180 - asin((player.posY+13-car->posY)/dist)*180/PI;
     }
+
+    
+    
+   
 
 
 
