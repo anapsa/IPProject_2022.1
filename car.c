@@ -41,10 +41,15 @@ void DrawCar(Car car, Texture2D carTexture){
    
 }
 
-void moveCar(Car *car){
+void moveCar(Car *car,Rectangle boundaries){
+    //Rectangle Reccar={65,45,car->posX,car->posY};
+    //if(CheckCollisionRecs(boundaries,Reccar)==true){
+       // car->isColliding=true;
+    //}
+    if(car[0].isColliding==false){
     car[0].posY+=sin(car->angle*PI/180)*car->speed;
     car[0].posX+=cos(car->angle*PI/180)*car->speed;
-
+    }
 }
 
 

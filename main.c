@@ -29,7 +29,7 @@ int main()
 
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
-    Rectangle exemplo;
+    Rectangle exemplo,Reccar,boundaries=(Rectangle){screenWidth,screenHeight,0,0};
     exemplo.x = 0;
     exemplo.y = 0;
     exemplo.height = 10;
@@ -55,12 +55,14 @@ int main()
                 DrawCar(car, carTexture);
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
                 DrawText(angle, 500, 500, 20, BLACK);
+                if(car.isColliding==false)
+                    DrawText("foi",600,600,20,BLACK);
                 if(timer<3){
                     changeCarAngle(&car, player);
-
+                    car.isColliding=false;
                 }
                 else{
-                    moveCar(&car);
+                    moveCar(&car,boundaries);
                 }
                 if(timer>=7){
                     timer=0;
