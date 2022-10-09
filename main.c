@@ -29,16 +29,22 @@ int main()
 
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
-    Rectangle exemplo,Reccar,boundaries=(Rectangle){screenWidth,screenHeight,0,0};
+    Rectangle exemplo,boundaries;
+    boundaries.x=50;
+    boundaries.y=50;
+    boundaries.height=1000;
+    boundaries.width=10;
     exemplo.x = 0;
     exemplo.y = 0;
     exemplo.height = 10;
     exemplo.y = 10;
-    Car car = (Car){300, 300, exemplo, exemplo, 0, 5, 0, 2, 0, false};
-    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 10, 10, false};
+    Car car = (Car){300, 300, exemplo, exemplo, 0, 5, 0, 5, 0, false};
+    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false};
     float timer = 0;
     int gameMode = GAME;
     char angle[6];
+    
+    
     while (!WindowShouldClose()){    
         
         switch(gameMode){
@@ -47,22 +53,24 @@ int main()
 
                 break;
             case GAME:
+                
                 timer+=GetFrameTime();
-                gcvt(car.angle, 3, angle);
+                
                 movePlayer(&player);
+                gcvt(car.angle,3,angle);
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
+                DrawRectangleRec(boundaries,RED);
+                DrawRectangleRec(car.carCollision,RED);
                 DrawCar(car, carTexture);
+                //DrawText(angle,500,500,20,BLACK);
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
-                DrawText(angle, 500, 500, 20, BLACK);
-                if(car.isColliding==false)
-                    DrawText("foi",600,600,20,BLACK);
-                if(timer<3){
+                if(timer<5){
                     changeCarAngle(&car, player);
-                    car.isColliding=false;
+                    prepareCollision(&car);
                 }
                 else{
-                    moveCar(&car,boundaries);
+                    moveCar(&car);
                 }
                 if(timer>=7){
                     timer=0;

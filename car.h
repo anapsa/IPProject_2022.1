@@ -20,7 +20,9 @@ void changeCarAngle(Car *car, Player player);
 
 void DrawCar(Car car, Texture2D carTexture);
 
-void moveCar(Car *car,Rectangle boundaries);
+void moveCar(Car *car);
+
+void verifyCollision(Car *car);
 
 
 

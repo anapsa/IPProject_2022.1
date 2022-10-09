@@ -8,7 +8,7 @@
 
 void changeCarAngle(Car *car, Player player){
     
-    float dist = sqrt(pow(abs(player.posY+13-car[0].posY), 2)+pow(abs(player.posX+8-car[0].posX), 2));
+    float dist = sqrt(pow(fabs(player.posY+13-car[0].posY), 2)+pow(fabs(player.posX+8-car[0].posX), 2));
 
     if(player.posX>car->posX){
 
@@ -17,6 +17,10 @@ void changeCarAngle(Car *car, Player player){
     else{
         car[0].angle = 180 - asin((player.posY+13-car->posY)/dist)*180/PI;
     }
+
+    
+    
+   
 
 
 
@@ -41,17 +45,25 @@ void DrawCar(Car car, Texture2D carTexture){
    
 }
 
-void moveCar(Car *car,Rectangle boundaries){
-    //Rectangle Reccar={65,45,car->posX,car->posY};
-    //if(CheckCollisionRecs(boundaries,Reccar)==true){
-       // car->isColliding=true;
-    //}
-    if(car[0].isColliding==false){
+void moveCar(Car *car){
     car[0].posY+=sin(car->angle*PI/180)*car->speed;
     car[0].posX+=cos(car->angle*PI/180)*car->speed;
-    }
+    car[0].carCollision.x=car[0].posX+8;
+    car[0].carCollision.y=car[0].posY+13;
 }
 
+void prepareCollision(Car *car){
+    Car auxcar=*car;
+    if(auxcar.angle<45){
+        auxcar.carCollision.height=45;
+        auxcar.carCollision.width=65;
+    }
+    else{
+        auxcar.carCollision.width=45;
+        auxcar.carCollision.height=65;
+    }
+    *car=auxcar;
+}
 
 
 
