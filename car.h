@@ -22,6 +22,8 @@ void DrawCar(Car car, Texture2D carTexture);
 
 void moveCar(Car *car);
 
+void verifyCollision(Car *car);
+
 
 
 #endif

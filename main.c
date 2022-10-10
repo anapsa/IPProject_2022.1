@@ -29,7 +29,11 @@ int main()
 
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
-    Rectangle exemplo;
+    Rectangle exemplo,boundaries;
+    boundaries.x=50;
+    boundaries.y=50;
+    boundaries.height=1000;
+    boundaries.width=10;
     exemplo.x = 0;
     exemplo.y = 0;
     exemplo.height = 10;
@@ -38,7 +42,7 @@ int main()
     Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false};
     float timer = 0;
     int gameMode = GAME;
-    
+    char angle[6];
     
     
     while (!WindowShouldClose()){    
@@ -53,14 +57,17 @@ int main()
                 timer+=GetFrameTime();
                 
                 movePlayer(&player);
+                gcvt(car.angle,3,angle);
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
+                DrawRectangleRec(boundaries,RED);
+                DrawRectangleRec(car.carCollision,RED);
                 DrawCar(car, carTexture);
+                //DrawText(angle,500,500,20,BLACK);
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
-                
                 if(timer<5){
                     changeCarAngle(&car, player);
-
+                    prepareCollision(&car);
                 }
                 else{
                     moveCar(&car);

@@ -48,9 +48,22 @@ void DrawCar(Car car, Texture2D carTexture){
 void moveCar(Car *car){
     car[0].posY+=sin(car->angle*PI/180)*car->speed;
     car[0].posX+=cos(car->angle*PI/180)*car->speed;
-
+    car[0].carCollision.x=car[0].posX+8;
+    car[0].carCollision.y=car[0].posY+13;
 }
 
+void prepareCollision(Car *car){
+    Car auxcar=*car;
+    if(auxcar.angle<45){
+        auxcar.carCollision.height=45;
+        auxcar.carCollision.width=65;
+    }
+    else{
+        auxcar.carCollision.width=45;
+        auxcar.carCollision.height=65;
+    }
+    *car=auxcar;
+}
 
 
 
