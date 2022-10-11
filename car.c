@@ -48,22 +48,47 @@ void DrawCar(Car car, Texture2D carTexture){
 void moveCar(Car *car){
     car[0].posY+=sin(car->angle*PI/180)*car->speed;
     car[0].posX+=cos(car->angle*PI/180)*car->speed;
-    car[0].carCollision.x=car[0].posX+8;
-    car[0].carCollision.y=car[0].posY+13;
+    
 }
 
-void prepareCollision(Car *car){
-    Car auxcar=*car;
-    if(auxcar.angle<45){
-        auxcar.carCollision.height=45;
-        auxcar.carCollision.width=65;
+bool collidedWalls(Car car, Rectangle walls[]){
+    bool isColliding = false;
+    for(int i=0;i<4;i++){
+        if(CheckCollisionCircleRec((Vector2){car.posX, car.posY}, 30, walls[i])==true){
+            isColliding = true;
+        }
     }
-    else{
-        auxcar.carCollision.width=45;
-        auxcar.carCollision.height=65;
-    }
-    *car=auxcar;
+    return isColliding;
 }
+
+void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player){
+    
+    int initialCollision = true;
+    for(int i=0;i<numberCars;i++){
+        
+        if(cars[i].mode==AIMING){
+            changeCarAngle(&cars[i], player);
+            if(cars[i].timeCounter>=cars[i].timeChangingAngle){
+                cars[i].mode = RUNNING;
+                
+            }
+        }
+        if(cars[i].mode==RUNNING){
+            cars[i].timeCounter = 0;
+            moveCar(&cars[i]);
+            if(collidedWalls(cars[i], walls)==false){
+                cars[i].isReadytoCollide = true;
+                
+            }
+            if(cars[i].isReadytoCollide==true && collidedWalls(cars[i], walls)==true){
+                cars[i].mode = AIMING;
+            }
+        }
+    }
+    
+}
+
+
 
 
 

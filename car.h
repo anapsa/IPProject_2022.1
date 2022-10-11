@@ -2,18 +2,22 @@
 #define CAR
 #include "raylib.h"
 #include "player.h"
+#define AIMING 100
+#define RUNNING 101
+
 
 typedef struct{
     float posX;
     float posY;
-    Rectangle carCollision;
     Rectangle carLife;
     float angle;
-    int speed;
+    float speed;
     int life;
     float timeChangingAngle;
     int mode;// aiming at player or running
-    bool isColliding; //verifica se está colidindo com a parede
+    float timeCounter;
+    bool isReadytoCollide;
+    
 } Car;
 
 void changeCarAngle(Car *car, Player player);
@@ -22,7 +26,9 @@ void DrawCar(Car car, Texture2D carTexture);
 
 void moveCar(Car *car);
 
-void verifyCollision(Car *car);
+bool collidedWalls(Car car, Rectangle walls[]);
+
+
 
 
 

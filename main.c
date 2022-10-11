@@ -10,8 +10,7 @@
 
 
 
-#define AIMING 100
-#define RUNNING 101
+
 #define INITMENU 10
 #define GAME 11
 #define UPGRADE 12
@@ -29,20 +28,37 @@ int main()
 
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
-    Rectangle exemplo,boundaries;
-    boundaries.x=50;
-    boundaries.y=50;
-    boundaries.height=1000;
-    boundaries.width=10;
+    Rectangle exemplo;
+
+    
     exemplo.x = 0;
     exemplo.y = 0;
     exemplo.height = 10;
     exemplo.y = 10;
-    Car car = (Car){300, 300, exemplo, exemplo, 0, 5, 0, 5, 0, false};
+    
+    Car car = (Car){25, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false};
     Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false};
-    float timer = 0;
+    
     int gameMode = GAME;
-    char angle[6];
+
+    Rectangle walls[4];
+    walls[0].x = 30;
+    walls[0].y = 30;
+    walls[0].width = 10;
+    walls[0].height = 1000;
+    walls[1].x = 30;
+    walls[1].y = 30;
+    walls[1].width = 1500;
+    walls[1].height = 10;
+    walls[2].x = 1500;
+    walls[2].y = 0;
+    walls[2].width = 10;
+    walls[2].height = 1000;
+    walls[3].x = 0;
+    walls[3].y = 1000;
+    walls[3].width = 1500;
+    walls[3].height = 10;
+    
     
     
     while (!WindowShouldClose()){    
@@ -54,27 +70,19 @@ int main()
                 break;
             case GAME:
                 
-                timer+=GetFrameTime();
                 
+                car.timeCounter+=GetFrameTime();
                 movePlayer(&player);
-                gcvt(car.angle,3,angle);
+                
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
-                DrawRectangleRec(boundaries,RED);
-                DrawRectangleRec(car.carCollision,RED);
-                DrawCar(car, carTexture);
-                //DrawText(angle,500,500,20,BLACK);
+                for(int i=0;i<4;i++){
+                    DrawRectangleRec(walls[i], BLACK);
+                }
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
-                if(timer<5){
-                    changeCarAngle(&car, player);
-                    prepareCollision(&car);
-                }
-                else{
-                    moveCar(&car);
-                }
-                if(timer>=7){
-                    timer=0;
-                }
+                DrawCar(car, carTexture);
+
+                MasterUpdateCars(&car, 1, walls, player);
                 
 
 
