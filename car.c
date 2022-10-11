@@ -63,10 +63,11 @@ bool collidedWalls(Car car, Rectangle walls[]){
 
 void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player){
     
-    int initialCollision = true;
+    
     for(int i=0;i<numberCars;i++){
         
         if(cars[i].mode==AIMING){
+            cars[i].isReadytoCollide = false;
             changeCarAngle(&cars[i], player);
             if(cars[i].timeCounter>=cars[i].timeChangingAngle){
                 cars[i].mode = RUNNING;
