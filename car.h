@@ -37,9 +37,7 @@ bool collidedWalls(Car car, Rectangle walls[]);
 
 void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player, float *mainTimer);
 
-bool checkCarSpikesCollision(Spikes *spikes, Car car, int numberSpikes);
 
-void applyCarDamage(Spikes *spikes, Car *cars, int numberCars, int numberSpikes);
 
 
 

@@ -38,10 +38,10 @@ int main()
     Car *cars;
     cars = malloc(sizeof(Car)*4);
 
-    cars[0] = (Car){25, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
-    cars[1] = (Car){1500, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
-    cars[2] = (Car){1000, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
-    cars[3] = (Car){1500, 1000, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
+    cars[0] = (Car){25, 25, exemplo, 0, 5, 100, 5, AIMING, 0, false, false};
+    cars[1] = (Car){1500, 25, exemplo, 0, 5, 100, 5, AIMING, 0, false, false};
+    cars[2] = (Car){1000, 25, exemplo, 0, 5, 100, 5, AIMING, 0, false, false};
+    cars[3] = (Car){1500, 1000, exemplo, 0, 5, 100, 5, AIMING, 0, false, false};
     Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false, false, false};
     
     

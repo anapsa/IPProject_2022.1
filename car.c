@@ -100,27 +100,6 @@ void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player playe
     
 }
 
-bool checkCarSpikesCollision(Spikes *spikes, Car car, int numberSpikes){
-    bool hit = false;
-    for(int i=0;i<numberSpikes;i++){
-        if(CheckCollisionCircleRec((Vector2){car.posX, car.posY}, 30, spikes[i].spikeCollision)==true){
-            hit = true;
-        }
-    }
-    return hit;
-}
-
-void applyCarDamage(Spikes *spikes, Car *cars, int numberCars, int numberSpikes){
-    for(int i=0;i<numberCars;i++){
-        if(cars[i].isReadytoHitSpikes==false && checkCarSpikesCollision(spikes, cars[i], numberSpikes)==false){
-            cars[i].isReadytoHitSpikes = true;
-        }
-        if(cars[i].isReadytoHitSpikes==true && checkCarSpikesCollision(spikes, cars[i], numberSpikes)==true){
-            cars[i].life-=20;//diminuindo a vida do carrinho em 20
-            cars[i].isReadytoHitSpikes = false;
-        }
-    }
-}
 
 
 

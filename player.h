@@ -1,6 +1,7 @@
 #ifndef PLAYER
 #define PLAYER
 #include "raylib.h"
+#include "car.h"
 
 
 typedef struct{
@@ -19,11 +20,6 @@ typedef struct{
 
 void movePlayer(Player *player);
 
-bool verifyPlayerSpikesCollision(Player player, Spikes *spikes, int numberSpikes);
-
-bool verifyPlayerCarsCollision(Player player, Car *cars, int numberCars);
-
-void applyPlayerDamage(Player *player, Car *cars, Spikes *spikes, int numberCars, int numberSpikes);
 
 
 #endif
