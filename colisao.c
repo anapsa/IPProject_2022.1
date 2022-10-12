@@ -29,7 +29,7 @@ void applyPlayerDamage(Player *player, Car *cars, Spikes *spikes, int numberCars
     if(player[0].isReadytoHitSpikes==false && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==false){
         player[0].isReadytoHitSpikes = true;
     }
-    if(player[0].isReadytoHitSpikes = true && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==true){
+    if(player[0].isReadytoHitSpikes == true && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==true){
         player[0].life-=10; // diminuindo a vida do player em 10
         player[0].isReadytoHitSpikes = false;
     }

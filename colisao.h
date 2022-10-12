@@ -3,6 +3,7 @@
 #include "player.h"
 #include "car.h"
 
+
 bool verifyPlayerSpikesCollision(Player player, Spikes *spikes, int numberSpikes);
 
 bool verifyPlayerCarsCollision(Player player, Car *cars, int numberCars);

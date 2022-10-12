@@ -1,10 +1,12 @@
 #include "raylib.h"
 #include <math.h>
 #include "car.c"
-#include "player.C"
+#include "player.c"
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "colisao.c"
+
 
 
 
@@ -30,7 +32,7 @@ int main()
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
     Rectangle exemplo;
 
-    
+   
     exemplo.x = 0;
     exemplo.y = 0;
     exemplo.height = 10;
