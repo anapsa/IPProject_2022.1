@@ -16,9 +16,16 @@ typedef struct{
     float timeChangingAngle;
     int mode;// aiming at player or running
     float timeCounter;
-    bool isReadytoCollide;
+    bool isReadytoCollide;// sempre começa falso
+    bool isReadytoHitSpikes;// sempre começa verdadeiro
     
 } Car;
+
+typedef struct{
+    float posX;
+    float posY;
+    Rectangle spikeCollision;
+} Spikes;
 
 void changeCarAngle(Car *car, Player player);
 
@@ -28,7 +35,11 @@ void moveCar(Car *car);
 
 bool collidedWalls(Car car, Rectangle walls[]);
 
+void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player, float *mainTimer);
 
+bool checkCarSpikesCollision(Spikes *spikes, Car car, int numberSpikes);
+
+void applyCarDamage(Spikes *spikes, Car *cars, int numberCars, int numberSpikes);
 
 
 

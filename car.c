@@ -40,8 +40,9 @@ void DrawCar(Car car, Texture2D carTexture){
     destination.height = 45;
     destination.width = 65;
     Vector2 origin = (Vector2){30, 30};
-    DrawTexturePro(carTexture, source, destination, origin, car.angle, RAYWHITE);
-
+    if(car.life>0){
+        DrawTexturePro(carTexture, source, destination, origin, car.angle, RAYWHITE);
+    }
    
 }
 
@@ -61,7 +62,7 @@ bool collidedWalls(Car car, Rectangle walls[]){
     return isColliding;
 }
 
-void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player){
+void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player player, float *mainTimer){
     
     
     for(int i=0;i<numberCars;i++){
@@ -86,7 +87,39 @@ void MasterUpdateCars(Car *cars, int numberCars, Rectangle walls[], Player playe
             }
         }
     }
+    if(*mainTimer>15){
+        for(int i=0;i<numberCars;i++){
+            cars[i].speed+=2;
+            cars[i].timeChangingAngle-=0.5;
+            if(cars[i].timeChangingAngle<0.1){
+                cars[i].timeChangingAngle = 0.1;
+            }
+        }
+        *mainTimer = 0;
+    }
     
+}
+
+bool checkCarSpikesCollision(Spikes *spikes, Car car, int numberSpikes){
+    bool hit = false;
+    for(int i=0;i<numberSpikes;i++){
+        if(CheckCollisionCircleRec((Vector2){car.posX, car.posY}, 30, spikes[i].spikeCollision)==true){
+            hit = true;
+        }
+    }
+    return hit;
+}
+
+void applyCarDamage(Spikes *spikes, Car *cars, int numberCars, int numberSpikes){
+    for(int i=0;i<numberCars;i++){
+        if(cars[i].isReadytoHitSpikes==false && checkCarSpikesCollision(spikes, cars[i], numberSpikes)==false){
+            cars[i].isReadytoHitSpikes = true;
+        }
+        if(cars[i].isReadytoHitSpikes==true && checkCarSpikesCollision(spikes, cars[i], numberSpikes)==true){
+            cars[i].life-=20;//diminuindo a vida do carrinho em 20
+            cars[i].isReadytoHitSpikes = false;
+        }
+    }
 }
 
 

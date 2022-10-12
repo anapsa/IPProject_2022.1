@@ -35,9 +35,15 @@ int main()
     exemplo.y = 0;
     exemplo.height = 10;
     exemplo.y = 10;
+    Car *cars;
+    cars = malloc(sizeof(Car)*4);
+
+    cars[0] = (Car){25, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
+    cars[1] = (Car){1500, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
+    cars[2] = (Car){1000, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
+    cars[3] = (Car){1500, 1000, exemplo, 0, 5, 0, 5, AIMING, 0, false, false};
+    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false, false, false};
     
-    Car car = (Car){25, 25, exemplo, 0, 5, 0, 5, AIMING, 0, false};
-    Player player = (Player){400, 400, 0, 5, exemplo, exemplo, 5, 5, false};
     
     int gameMode = GAME;
 
@@ -58,6 +64,8 @@ int main()
     walls[3].y = 1000;
     walls[3].width = 1500;
     walls[3].height = 10;
+
+    float mainTimer = 0;
     
     
     
@@ -69,9 +77,11 @@ int main()
 
                 break;
             case GAME:
+                mainTimer+=GetFrameTime();
                 
-                
-                car.timeCounter+=GetFrameTime();
+                for(int i=0;i<4;i++){
+                    cars[i].timeCounter+=GetFrameTime();
+                }
                 movePlayer(&player);
                 
                 BeginDrawing();
@@ -80,9 +90,11 @@ int main()
                     DrawRectangleRec(walls[i], BLACK);
                 }
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
-                DrawCar(car, carTexture);
+                for(int i=0;i<4;i++){
+                    DrawCar(cars[i], carTexture);
+                }
 
-                MasterUpdateCars(&car, 1, walls, player);
+                MasterUpdateCars(cars, 4, walls, player, &mainTimer);
                 
 
 
@@ -100,6 +112,7 @@ int main()
     }
     UnloadTexture(playerTexture);
     UnloadTexture(carTexture);
+    free(cars);
     CloseWindow();
           
     return 0;
