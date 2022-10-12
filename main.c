@@ -112,9 +112,7 @@ int main()
                 
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
-                for(int i=0;i<4;i++){
-                    DrawCircle(cars[i].posX, cars[i].posY, 30, RED);
-                }
+                
                 
                 DrawTextureEx(spikeTexture, (Vector2){700, 700}, 0, 0.4, RAYWHITE);
                 for(int i=0;i<4;i++){
@@ -124,7 +122,7 @@ int main()
                 for(int i=0;i<4;i++){
                     DrawCar(cars[i], carTexture);
                 }
-                if(player.life<=15){
+                if(player.life<=0){
                     DrawText("morreu", 500, 500, 30, BLACK);
                 }
 
