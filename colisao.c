@@ -26,13 +26,19 @@ bool verifyPlayerCarsCollision(Player player, Car *cars, int numberCars){
 
 void applyPlayerDamage(Player *player, Car *cars, Spikes *spikes, int numberCars, int numberSpikes){
     // colisão com spikes primeiro:
-    if(player[0].isReadytoHitSpikes==false && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==false){
+    if(player[0].isReadytoHitSpikes==false && verifyPlayerSpikesCollision(player[0], spikes, numberCars)==false){
         player[0].isReadytoHitSpikes = true;
+        player[0].invencibilityTime = 2;
     }
     if(player[0].isReadytoHitSpikes == true && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==true){
-        player[0].life-=10; // diminuindo a vida do player em 10
+        player[0].life-=10;
         player[0].isReadytoHitSpikes = false;
     }
+    if(player[0].invencibilityTime<=0){
+        player[0].isReadytoHitSpikes = true;
+        player[0].invencibilityTime = 2;
+    }
+    
     // colisão com os carrinhos
     if(player[0].isReadytoHitCar==false && verifyPlayerCarsCollision(player[0], cars, numberCars)==false){
         player[0].isReadytoHitCar = true;

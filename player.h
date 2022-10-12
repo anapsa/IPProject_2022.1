@@ -16,6 +16,8 @@ typedef struct{
     bool isMoving;
     bool isReadytoHitCar; // começa sempre verdadeiro
     bool isReadytoHitSpikes; // começa sempre verdadeiro
+    float invencibilityTime;
+    
 } Player;
 
 void movePlayer(Player *player);
