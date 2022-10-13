@@ -28,5 +28,5 @@ void upgradenumberSpikes(Spikes *spike, int *numberSpike) {
 
 
  void upgradePlayerSpeed(Player *player){
-    (*player).speed += 10; 
+    (*player).speed += 10;  
 }
