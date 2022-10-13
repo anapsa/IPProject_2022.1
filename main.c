@@ -30,6 +30,13 @@ int main()
 
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
+    Texture2D backgroundTexture = LoadTexture("fundojogo.png");
+    
+    int background_width = 1500;
+    int background_height = 1500;
+
+    DrawTextureEx (backgroundTexture, (Vector2) {0,0},0, 1, RAYWHITE);
+
     Rectangle exemplo;
 
    
@@ -54,7 +61,7 @@ int main()
     
     int gameMode = GAME;
 
-    Rectangle walls[4];
+   Rectangle walls[4];
     walls[0].x = 30;
     walls[0].y = 30;
     walls[0].width = 10;
@@ -70,8 +77,33 @@ int main()
     walls[3].x = 0;
     walls[3].y = 1000;
     walls[3].width = 1500;
-    walls[3].height = 10;
+    walls[3].height = 10; 
 
+
+    
+
+
+
+
+    Rectangle walls_carro[4];
+    walls_carro[0].x = 0;
+    walls_carro[0].y = 0;
+    walls_carro[0].width = 600;
+    walls_carro[0].height = 600;
+    walls_carro[1].x = 0;
+    walls_carro[1].y = 0;
+    walls_carro[1].width = 600;
+    walls_carro[1].height = 600;
+    walls_carro[2].x = 0;
+    walls_carro[2].y = 0;
+    walls_carro[2].width = 600;
+    walls_carro[2].height = 600;
+    walls_carro[3].x = 0;
+    walls_carro[3].y = 0;
+    walls_carro[3].width = 600;
+    walls_carro[3].height = 600;
+
+    
     float mainTimer = 0;
     Rectangle spikeCollision;
     spikeCollision.x = 700;
@@ -84,6 +116,14 @@ int main()
     spike.posY = 700;
     spike.spikeCollision = spikeCollision;
     char playerlife[5];
+    char playerPosX[5];
+    char playerPosY[5];
+
+    Camera2D cam;
+    cam.offset = (Vector2){GetScreenWidth()/2, GetScreenHeight()/2};
+    cam.rotation = 0;
+    cam.zoom = 1;
+    
     
     
     while (!WindowShouldClose()){    
@@ -94,6 +134,8 @@ int main()
 
                 break;
             case GAME:
+                sprintf(playerPosX, "%d", player.posX);
+                sprintf(playerPosY, "%d", player.posY);
                 sprintf(playerlife, "%d", player.life);
                 mainTimer+=GetFrameTime();
                 player.playerCollision.x = player.posX;
@@ -104,14 +146,43 @@ int main()
                 if(verifyPlayerSpikesCollision(player, &spike, 1)==true){
                     player.invencibilityTime-=GetFrameTime();
                 }
+
+                // barreira pro personagem não sair pelos cantos
+                if(player.posX < 220) {
+                    player.posX = 0;
+                    player.isMoving = false;
+                }
+                else if ((player.posX + playerCollision.width) > background_width) {
+                    player.posX = background_width - playerCollision.width;
+                    player.isMoving = false;
+                }
+
+                if(player.posY < 225) {
+                    player.posY = 0;
+                    player.isMoving = false;
+                }
+                else if ((player.posY + playerCollision.height) > background_height) {
+                    player.posY = background_height - playerCollision.height;
+                    player.isMoving = false;
+                }
+
                 
                 
-                DrawText(playerlife, 600, 600, 30, PINK);
+                cam.target = (Vector2){player.posX, player.posY};
+                
+                
                 
                 movePlayer(&player);
                 
                 BeginDrawing();
+                BeginMode2D(cam);
                 ClearBackground(RAYWHITE);
+                DrawTexture(backgroundTexture, 0,0, RAYWHITE);
+                DrawText(playerlife, 600, 600, 30, PINK);
+                DrawText(playerPosX, 300, 300, 30, RED);
+                DrawText(playerPosY, 400, 400, 30, RED);
+                
+                
                 
                 
                 DrawTextureEx(spikeTexture, (Vector2){700, 700}, 0, 0.4, RAYWHITE);
@@ -136,6 +207,7 @@ int main()
 
                 
                 EndDrawing();
+                EndMode2D();
                 break;
             case UPGRADE:
                 //código da escolha do upgrade no final de cada wave
@@ -148,6 +220,7 @@ int main()
     UnloadTexture(playerTexture);
     UnloadTexture(carTexture);
     UnloadTexture(spikeTexture);
+    UnloadTexture(backgroundTexture);
     free(cars);
     CloseWindow();
           

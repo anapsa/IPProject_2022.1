@@ -26,7 +26,7 @@ bool verifyPlayerCarsCollision(Player player, Car *cars, int numberCars){
 
 void applyPlayerDamage(Player *player, Car *cars, Spikes *spikes, int numberCars, int numberSpikes){
     // colisão com spikes primeiro:
-    if(player[0].isReadytoHitSpikes==false && verifyPlayerSpikesCollision(player[0], spikes, numberCars)==false){
+    if(player[0].isReadytoHitSpikes==false && verifyPlayerSpikesCollision(player[0], spikes, numberSpikes)==false){
         player[0].isReadytoHitSpikes = true;
         player[0].invencibilityTime = 2;
     }
