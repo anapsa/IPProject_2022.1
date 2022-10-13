@@ -35,7 +35,7 @@ int main()
     int background_width = 1500;
     int background_height = 1500;
 
-    DrawTextureEx (backgroundTexture, (Vector2) {0,0},0, 1, RAYWHITE);
+
 
     Rectangle exemplo;
 
@@ -62,22 +62,22 @@ int main()
     int gameMode = GAME;
 
    Rectangle walls[4];
-    walls[0].x = 30;
-    walls[0].y = 30;
-    walls[0].width = 10;
-    walls[0].height = 1000;
-    walls[1].x = 30;
-    walls[1].y = 30;
-    walls[1].width = 1500;
-    walls[1].height = 10;
-    walls[2].x = 1500;
+    walls[0].x = 00;
+    walls[0].y = 00;
+    walls[0].width = 2250;
+    walls[0].height = 5;
+    walls[1].x = 00;
+    walls[1].y = 00;
+    walls[1].width = 5;
+    walls[1].height = 2250;
+    walls[2].x = 2250;
     walls[2].y = 0;
-    walls[2].width = 10;
-    walls[2].height = 1000;
+    walls[2].width = 5;
+    walls[2].height = 2250;
     walls[3].x = 0;
-    walls[3].y = 1000;
-    walls[3].width = 1500;
-    walls[3].height = 10; 
+    walls[3].y = 2250;
+    walls[3].width = 2250;
+    walls[3].height = 5; 
 
 
     
@@ -85,23 +85,23 @@ int main()
 
 
 
-    Rectangle walls_carro[4];
-    walls_carro[0].x = 0;
-    walls_carro[0].y = 0;
-    walls_carro[0].width = 600;
-    walls_carro[0].height = 600;
-    walls_carro[1].x = 0;
-    walls_carro[1].y = 0;
-    walls_carro[1].width = 600;
-    walls_carro[1].height = 600;
-    walls_carro[2].x = 0;
-    walls_carro[2].y = 0;
-    walls_carro[2].width = 600;
-    walls_carro[2].height = 600;
-    walls_carro[3].x = 0;
-    walls_carro[3].y = 0;
-    walls_carro[3].width = 600;
-    walls_carro[3].height = 600;
+    Rectangle walls_player[4];
+    walls_player[0].x = 335;
+    walls_player[0].y = 335;
+    walls_player[0].width = 1580;
+    walls_player[0].height = 5;
+    walls_player[1].x = 335;
+    walls_player[1].y = 335;
+    walls_player[1].width = 5;
+    walls_player[1].height = 1580;
+    walls_player[2].x = 1915;
+    walls_player[2].y = 335;
+    walls_player[2].width = 5;
+    walls_player[2].height = 1580;
+    walls_player[3].x = 335;
+    walls_player[3].y = 1915;
+    walls_player[3].width = 1580;
+    walls_player[3].height = 5;
 
     
     float mainTimer = 0;
@@ -137,6 +137,7 @@ int main()
                 sprintf(playerPosX, "%d", player.posX);
                 sprintf(playerPosY, "%d", player.posY);
                 sprintf(playerlife, "%d", player.life);
+                player.isMoving = false;
                 mainTimer+=GetFrameTime();
                 player.playerCollision.x = player.posX;
                 player.playerCollision.y = player.posY;
@@ -147,24 +148,26 @@ int main()
                     player.invencibilityTime-=GetFrameTime();
                 }
 
-                // barreira pro personagem não sair pelos cantos
-                if(player.posX < 220) {
-                    player.posX = 0;
+                // tentativa falha de barreira pro personagem não sair pelos cantos
+                /* if(player.posX < 220) {
+                    player.posX = 220;
                     player.isMoving = false;
                 }
-                else if ((player.posX + playerCollision.width) > background_width) {
-                    player.posX = background_width - playerCollision.width;
+                else if ((player.posX + playerCollision.width) > 1250) {
+                    player.posX = 1250 ;
                     player.isMoving = false;
                 }
 
                 if(player.posY < 225) {
-                    player.posY = 0;
+                    player.posY = 225;
                     player.isMoving = false;
                 }
-                else if ((player.posY + playerCollision.height) > background_height) {
-                    player.posY = background_height - playerCollision.height;
+                else if ((player.posY + playerCollision.height) > 1245) {
+                    player.posY = 1245 ;
                     player.isMoving = false;
-                }
+                } */ 
+
+
 
                 
                 
@@ -172,15 +175,15 @@ int main()
                 
                 
                 
-                movePlayer(&player);
+                movePlayer(&player, walls_player);
                 
                 BeginDrawing();
                 BeginMode2D(cam);
                 ClearBackground(RAYWHITE);
-                DrawTexture(backgroundTexture, 0,0, RAYWHITE);
+                DrawTextureEx (backgroundTexture, (Vector2) {0,0},0, 1.5, RAYWHITE);
                 DrawText(playerlife, 600, 600, 30, PINK);
-                DrawText(playerPosX, 300, 300, 30, RED);
-                DrawText(playerPosY, 400, 400, 30, RED);
+                DrawText(playerPosX, 600, 300, 30, RED);
+                DrawText(playerPosY, 700, 400, 30, RED);
                 
                 
                 
@@ -188,6 +191,7 @@ int main()
                 DrawTextureEx(spikeTexture, (Vector2){700, 700}, 0, 0.4, RAYWHITE);
                 for(int i=0;i<4;i++){
                     DrawRectangleRec(walls[i], BLACK);
+                    DrawRectangleRec(walls_player[i], RED);
                 }
                 DrawTexture(playerTexture, player.posX, player.posY, RAYWHITE);
                 for(int i=0;i<4;i++){

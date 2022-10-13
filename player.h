@@ -20,7 +20,7 @@ typedef struct{
     
 } Player;
 
-void movePlayer(Player *player);
+void movePlayer(Player *player, Rectangle walls_player[]);
 
 
 
