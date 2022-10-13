@@ -130,7 +130,7 @@ int main()
         
         switch(gameMode){
             case INITMENU:
-                // código de implementação e funcionalidade do menu
+                DrawTextureEx(menuTexture, (Vector2){0,0},0,1, GRAY);
 
                 break;
             case GAME:
