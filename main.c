@@ -31,9 +31,9 @@ int main()
     Texture2D carTexture = LoadTexture("SportsRacingCar_0.png");
     Texture2D playerTexture = LoadTexture("Assets/CharacterSprites/PlayerIdleLeft.png");
     Texture2D backgroundTexture = LoadTexture("fundojogo.png");
-    
-    int background_width = 1500;
-    int background_height = 1500;
+    Texture2D menuTexture = LoadTexture("menu.png");
+    Texture2D rulesTexture = LoadTexture("rules.png");
+    Texture2D lostTexture = LoadTexture("lost.png");
 
 
 
@@ -225,6 +225,9 @@ int main()
     UnloadTexture(carTexture);
     UnloadTexture(spikeTexture);
     UnloadTexture(backgroundTexture);
+    UnloadTexture(menuTexture);
+    UnloadTexture(rulesTexture);
+    UnloadTexture(lostTexture);
     free(cars);
     CloseWindow();
           
